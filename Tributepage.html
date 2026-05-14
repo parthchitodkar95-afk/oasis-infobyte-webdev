@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tribute Page - Dr. A.P.J. Abdul Kalam</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #fdf6ec, #f3e8ff);
+      color: #2c2c2c;
+      line-height: 1.7;
+    }
+
+    .hero {
+      background: linear-gradient(rgba(18, 18, 18, 0.65), rgba(18, 18, 18, 0.65)),
+        url("https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1600&q=80")
+          center/cover no-repeat;
+      color: white;
+      min-height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    .hero-content {
+      max-width: 800px;
+    }
+
+    .subtitle {
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+      color: #ffd966;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 12px;
+      font-family: Georgia, serif;
+    }
+
+    .tagline {
+      font-size: 1.1rem;
+      opacity: 0.95;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 20px 60px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      border-left: 6px solid #8b5cf6;
+    }
+
+    .card h2 {
+      margin-bottom: 14px;
+      color: #5b21b6;
+      font-size: 1.6rem;
+    }
+
+    .intro {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .profile-img {
+      width: 220px;
+      max-width: 100%;
+      border-radius: 16px;
+      object-fit: cover;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.15);
+    }
+
+    .qualities {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+    }
+
+    .quality-box {
+      background: linear-gradient(135deg, #8b5cf6, #ec4899);
+      color: white;
+      padding: 18px;
+      text-align: center;
+      border-radius: 14px;
+      font-weight: 600;
+    }
+
+    blockquote {
+      font-size: 1.2rem;
+      font-style: italic;
+      padding-left: 18px;
+      border-left: 5px solid #8b5cf6;
+      color: #444;
+    }
+
+    footer {
+      text-align: center;
+      padding: 18px;
+      background: #1f2937;
+      color: white;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+
+      .intro {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-content">
+      <p class="subtitle">Tribute Page</p>
+      <h1>Dr. A.P.J. Abdul Kalam</h1>
+      <p class="tagline">The People's President • Scientist • Inspiration for Millions</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card intro">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/9/9d/APJ_Abdul_Kalam.jpg"
+        alt="Dr. A.P.J. Abdul Kalam"
+        class="profile-img"
+      />
+      <div>
+        <h2>Why I Admire Him</h2>
+        <p>
+          Dr. A.P.J. Abdul Kalam is one of the most respected personalities in India.
+          I admire him for his simplicity, dedication, and the way he inspired young
+          people to dream big. He proved that hard work, discipline, and kindness can
+          make a person truly महान in life.
+        </p>
+        <p>
+          His words always encourage me to stay focused on my goals and never give up
+          during difficult times. He is not only remembered as a great scientist, but
+          also as a humble and motivational leader.
+        </p>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>About Him</h2>
+      <p>
+        Dr. Kalam was an Indian aerospace scientist and the 11th President of India.
+        He played an important role in India's missile development and space research.
+        Even after achieving so much, he lived a simple life and always connected with
+        students and youth.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>His Great Qualities</h2>
+      <div class="qualities">
+        <div class="quality-box">Simplicity</div>
+        <div class="quality-box">Leadership</div>
+        <div class="quality-box">Hard Work</div>
+        <div class="quality-box">Inspiration</div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Famous Quote</h2>
+      <blockquote>
+        “Dream, dream, dream. Dreams transform into thoughts and thoughts result in action.”
+      </blockquote>
+    </section>
+  </main>
+
+  <footer>
+    <p>Made with HTML and CSS for Oasis Infobyte Internship</p>
+  </footer>
+</body>
+</html>
