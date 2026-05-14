@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>To-Do WebApp</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #222;
+      padding: 20px;
+    }
+
+    .app {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+
+    .header {
+      padding: 30px 20px;
+      text-align: center;
+      background: linear-gradient(135deg, #5b67ff, #8b5cf6);
+      color: white;
+    }
+
+    .header h1 {
+      font-size: 2.2rem;
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      opacity: 0.95;
+    }
+
+    .content {
+      padding: 24px;
+    }
+
+    .input-section {
+      display: grid;
+      grid-template-columns: 2fr 1fr auto;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .input-section input {
+      padding: 14px 16px;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .input-section input:focus {
+      border-color: #8b5cf6;
+    }
+
+    .input-section button {
+      padding: 14px 18px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+      color: white;
+      background: #8b5cf6;
+      transition: 0.25s ease;
+    }
+
+    .input-section button:hover {
+      transform: translateY(-1px);
+      background: #7c3aed;
+    }
+
+    .columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .panel {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 18px;
+      min-height: 300px;
+    }
+
+    .panel h2 {
+      font-size: 1.3rem;
+      margin-bottom: 14px;
+      color: #4f46e5;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .count {
+      font-size: 0.9rem;
+      background: #e0e7ff;
+      color: #3730a3;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    .task-list {
+      list-style: none;
+      display: grid;
+      gap: 12px;
+    }
+
+    .task {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-left: 6px solid #8b5cf6;
+      border-radius: 14px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+    }
+
+    .task.completed {
+      border-left-color: #10b981;
+      opacity: 0.95;
+    }
+
+    .task-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .task-title {
+      font-size: 1rem;
+      font-weight: 700;
+      word-break: break-word;
+    }
+
+    .task.completed .task-title {
+      text-decoration: line-through;
+      color: #6b7280;
+    }
+
+    .meta {
+      font-size: 0.85rem;
+      color: #6b7280;
+      display: grid;
+      gap: 2px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .actions button {
+      border: none;
+      padding: 8px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      color: white;
+      transition: 0.2s ease;
+    }
+
+    .edit-btn { background: #2563eb; }
+    .complete-btn { background: #16a34a; }
+    .delete-btn { background: #dc2626; }
+
+    .actions button:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+    }
+
+    .empty {
+      color: #6b7280;
+      text-align: center;
+      padding: 18px 10px;
+      border: 1px dashed #cbd5e1;
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    @media (max-width: 900px) {
+      .columns {
+        grid-template-columns: 1fr;
+      }
+
+      .input-section {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="header">
+      <h1>To-Do WebApp</h1>
+      <p>Add, edit, complete, and delete your daily tasks</p>
+    </div>
+
+    <div class="content">
+      <div class="input-section">
+        <input type="text" id="taskInput" placeholder="Enter task name" />
+        <input type="date" id="taskDate" />
+        <button onclick="addTask()">Add Task</button>
+      </div>
+
+      <div class="columns">
+        <section class="panel">
+          <h2>Pending Tasks <span class="count" id="pendingCount">0</span></h2>
+          <ul id="pendingList" class="task-list"></ul>
+        </section>
+
+        <section class="panel">
+          <h2>Completed Tasks <span class="count" id="completedCount">0</span></h2>
+          <ul id="completedList" class="task-list"></ul>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let tasks = [];
+
+    function formatDateTime(date) {
+      return new Date(date).toLocaleString();
+    }
+
+    function addTask() {
+      const taskInput = document.getElementById("taskInput");
+      const taskDate = document.getElementById("taskDate");
+
+      const title = taskInput.value.trim();
+      if (title === "") {
+        alert("Please enter a task.");
+        return;
+      }
+
+      const task = {
+        id: Date.now(),
+        title: title,
+        dueDate: taskDate.value || "",
+        addedAt: new Date().toISOString(),
+        completed: false,
+        completedAt: ""
+      };
+
+      tasks.push(task);
+      taskInput.value = "";
+      taskDate.value = "";
+      renderTasks();
+    }
+
+    function editTask(id) {
+      const task = tasks.find(t => t.id === id);
+      if (!task) return;
+
+      const newTitle = prompt("Edit task name:", task.title);
+      if (newTitle === null) return;
+
+      const updatedTitle = newTitle.trim();
+      if (updatedTitle === "") {
+        alert("Task cannot be empty.");
+        return;
+      }
+
+      task.title = updatedTitle;
+      renderTasks();
+    }
+
+    function toggleComplete(id) {
+      const task = tasks.find(t => t.id === id);
+      if (!task) return;
+
+      task.completed = !task.completed;
+      task.completedAt = task.completed ? new Date().toISOString() : "";
+      renderTasks();
+    }
+
+    function deleteTask(id) {
+      tasks = tasks.filter(t => t.id !== id);
+      renderTasks();
+    }
+
+    function createTaskItem(task) {
+      const li = document.createElement("li");
+      li.className = "task" + (task.completed ? " completed" : "");
+
+      li.innerHTML = `
+        <div class="task-top">
+          <div>
+            <div class="task-title">${task.title}</div>
+            <div class="meta">
+              <span>Added: ${formatDateTime(task.addedAt)}</span>
+              ${task.dueDate ? `<span>Due: ${task.dueDate}</span>` : ""}
+              ${task.completedAt ? `<span>Completed: ${formatDateTime(task.completedAt)}</span>` : ""}
+            </div>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="edit-btn" onclick="editTask(${task.id})">Edit</button>
+          <button class="complete-btn" onclick="toggleComplete(${task.id})">
+            ${task.completed ? "Mark Pending" : "Complete"}
+          </button>
+          <button class="delete-btn" onclick="deleteTask(${task.id})">Delete</button>
+        </div>
+      `;
+      return li;
+    }
+
+    function renderTasks() {
+      const pendingList = document.getElementById("pendingList");
+      const completedList = document.getElementById("completedList");
+      const pendingCount = document.getElementById("pendingCount");
+      const completedCount = document.getElementById("completedCount");
+
+      pendingList.innerHTML = "";
+      completedList.innerHTML = "";
+
+      const pendingTasks = tasks.filter(task => !task.completed);
+      const completedTasks = tasks.filter(task => task.completed);
+
+      pendingCount.textContent = pendingTasks.length;
+      completedCount.textContent = completedTasks.length;
+
+      if (pendingTasks.length === 0) {
+        pendingList.innerHTML = `<div class="empty">No pending tasks</div>`;
+      } else {
+        pendingTasks.forEach(task => pendingList.appendChild(createTaskItem(task)));
+      }
+
+      if (completedTasks.length === 0) {
+        completedList.innerHTML = `<div class="empty">No completed tasks</div>`;
+      } else {
+        completedTasks.forEach(task => completedList.appendChild(createTaskItem(task)));
+      }
+    }
+
+    document.getElementById("taskInput").addEventListener("keypress", function (e) {
+      if (e.key === "Enter") addTask();
+    });
+
+    renderTasks();
+  </script>
+</body>
+</html>
